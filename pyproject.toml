@@ -22,6 +22,17 @@ pytest-assume = "^2.4.3"
 [tool.poetry.scripts]
 notes = "src.encephalon.main:main"
 
+[tool.black]
+extend-exclude = '''
+(
+    ^tests
+    __pycache__
+    ^.venv
+    ^.pytest_cache
+    ^.mypy_cache
+)
+'''
+
 [tool.pytest]
 mock_use_standalone_module = true
 
