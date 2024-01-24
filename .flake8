@@ -1,0 +1,8 @@
+[flake8]
+max-line-length = 88
+exclude =
+    ^tests
+    __pycache__
+    ^.venv
+    ^.pytest_cache
+    ^.mypy_cache

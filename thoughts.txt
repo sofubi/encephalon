@@ -1,7 +1,0 @@
-TODO:
-- [ ] Decide on how to manage scheduling
-- [ ] Ways to clean up notes
-- [ ] Extensible and customizable file management
-- [ ] Customizable regex markers
-- [ ] Customizable template metada
-- [ ] Dynamic metadata

@@ -5,6 +5,7 @@ description = "A tool to remove the brain- just shortly."
 authors = ["Thomas Lawton <thomas.lawton@ratmail.cc>"]
 readme = "README.md"
 license = "MIT"
+packages = [{ include = "encephalon", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -15,9 +16,28 @@ pytest = "^7.4.0"
 isort = "^5.12.0"
 mypy = "^1.4.1"
 flake8 = "^7.0.0"
+pytest-mock = "^3.12.0"
+pytest-assume = "^2.4.3"
 
 [tool.poetry.scripts]
-notes = "notes_cli.main:run"
+notes = "src.encephalon.main:main"
+
+[tool.black]
+extend-exclude = '''
+(
+    ^tests
+    __pycache__
+    ^.venv
+    ^.pytest_cache
+    ^.mypy_cache
+)
+'''
+
+[tool.pytest]
+mock_use_standalone_module = true
+
+[tool.pytest.ini_options]
+addopts = ["--import-mode=importlib"]
 
 [build-system]
 requires = ["poetry-core"]
