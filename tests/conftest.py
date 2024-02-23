@@ -1,23 +1,21 @@
 import pytest
 
-MATCH = """
-    @@note@@
-    $stuff
-    # stuff
-    #stuff
-    THIS is a note
-    @@end@@
-    """
+MATCH = """@@note@@
+$stuff
+# stuff
+#stuff
+THIS is a note
+@@end@@
+"""
 
 
-NO_MATCH = """
-    @note@
-    $stuff
-    # stuff
-    #stuff
-    THIS is a note
-    @end@
-    """
+NO_MATCH = """@note@
+$stuff
+# stuff
+#stuff
+THIS is a note
+@end@
+"""
 
 
 @pytest.fixture(scope="session")

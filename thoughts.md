@@ -34,3 +34,16 @@ THOUGHTS:
 - Each file may have many notes -> how should notes be held intermediately?
   - Pass off each match to a tmp file then flush?
 - Think about being passed more than one file path - n number of note files
+
+
+How can I save a notes file with multiple notes that is reparseable?
+Should each "note" be discrete within a folder?
+I need a way to append to notes files.
+
+NEED A CLASS FOR:
+- Notes
+- Folders
+
+Need parser that parses notes conent and finds (substring search):
+- folder structure within top level (if no structure store in top level)
+- format to save note in (default to .md)
