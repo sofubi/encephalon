@@ -1,0 +1,16 @@
+@@note@@
+testing/test.txt
+this is a note test
+@@end@@
+
+@@note@@
+another_test/testing.md
+a second
+and mo
+re
+longer note
+@@end@@
+
+@note@@
+a malformed note@@
+@@end@@

@@ -1,32 +1,28 @@
+from mmap import ACCESS_READ, mmap
 from os import PathLike
 from pathlib import Path
+from re import Pattern, compile
 
 NOTE_START: str = "@@note@@"
 NOTE_END: str = "@@end@@"
+
+NOTE_PATTERN: Pattern[bytes] = compile(f"{NOTE_START}\n((?:.+\n)+){NOTE_END}".encode())
+
+TESTING = b"""@@note@@
+$stuff
+# stuff
+#stuff
+THIS is a note
+@@end@@
+"""
 
 
 def parse_notes(file: Path) -> list[str]:
     matches: list[str] = []
 
-    with open(file, "r") as f:
-        innote: bool = False
-        match: int = 0
-        for line in f:
-            if innote:
-                if NOTE_END in line:
-                    innote = False
-                    continue
-
-                if (match - 1) < len(matches):
-                    matches[match - 1] = "\n".join(
-                        [matches[match - 1], line.strip("\n\r")]
-                    )
-                else:
-                    matches.append(line.strip("\n\r"))
-
-            if NOTE_START in line:
-                innote = True
-                match += 1
+    with open(file, "rb") as f:
+        mm = mmap(f.fileno(), 0, access=ACCESS_READ)
+        matches = [n.decode("utf-8") for n in NOTE_PATTERN.findall(mm)]
 
     if len(matches) < 1:
         print("No matching notes found.\nNo action taken.")
@@ -41,15 +37,14 @@ def fetch_path(file: str | PathLike) -> Path:
     if file is not None and isinstance(file, str):
         try:
             file = Path(file).expanduser()
+        except FileNotFoundError as e:
+            print(f"No file found at given path: {e}")
+            raise
         except Exception as e:
-            print(f"Error finding file: {e}")
-            raise FileNotFoundError from e
+            print(f"Exception while finding file at given path: {e}")
+            raise
 
         return file
 
     print(f"{file} is an invalid filepath.")
     raise OSError
-
-
-def fetch_parse(file: Path) -> list[str]:
-    return parse_notes(fetch_path(file))
